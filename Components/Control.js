@@ -117,7 +117,8 @@ class Control extends PureComponent{
                                 autoFocus={true}
                                 onFocus={()=>{ this.setState({barcode:''}) }}
                                 ref={(input) => { this.firstTextInput = input }}
-                                onSubmitEditing={() => { this.showUserData(this.state.barcode) }}
+                                blurOnSubmit={false}
+                                onSubmitEditing={() => { this.showUserData(this.state.barcode);this.firstTextInput.focus() }}
                             />
                             {!this.state.showUserData ? 
                             <TouchableOpacity
@@ -183,27 +184,27 @@ class Control extends PureComponent{
                         
                     </View>}
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.titleContainer}>{'Informations de vaccination'}</Text>
+                        <Text style={styles.titleContainer}>{'Carte de santé'}</Text>
                         {this.state.showUserData &&
                             <View>
                                 <View style={{flexDirection:"row"}}>
-                                    <Text>{"A attrapé le COVID : "}</Text>
+                                    <Text>{"COVID 19 + : "}</Text>
                                     <Text style={{fontWeight:"bold", color:"black"}}>{this.state.userData.hasCovid ? " Oui " : " Non "  }</Text>
                                 </View>
                                 <View style={{flexDirection:"row"}}>
-                                    <Text>{"A terminé sa vaccination : "}</Text>
+                                    <Text>{"Vaccination complète : "}</Text>
                                     <Text style={{fontWeight:"bold", color:"black"}}>{this.state.userData.isDone ? " Oui " : " Non " }</Text>
                                 </View>
-                                <Text>{"Type du vaccin :  " + this.state.userData.vaccinType }</Text>
+                                <Text>{"Vaccin :  " + this.state.userData.vaccinType }</Text>
                                 <View style={{flexDirection:"row"}}>
-                                    <Text>{"Date de la 1 ere dose : "}</Text> 
+                                    <Text>{"Date du vaccin : "}</Text> 
                                     {
                                         this.state.userData.vaccin1Date && 
                                         <Text>{ this.state.userData.vaccin1Date.substring(0,10) }</Text>                                
                                     }                               
                                 </View>
                                 <View style={{flexDirection:"row"}}>
-                                    <Text>{"Date de la 2 eme dose : "}</Text> 
+                                    <Text>{"Date du rappel : "}</Text> 
                                     {
                                         this.state.userData.vaccin2Date && 
                                         <Text>{ this.state.userData.vaccin2Date.substring(0,10) }</Text>                                
@@ -212,7 +213,7 @@ class Control extends PureComponent{
                             </View>
                         }
                     </View>
-                    <Text style={{color:"black",}}>Scantech passSanitaire© 2021</Text>
+                    <Text style={{color:"black", marginLeft:8}}>Scantech passSanitaire© 2021</Text>
                 </ScrollView>
             </View>
         )
@@ -293,7 +294,9 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius:25
     },
     vaccinatedContainer:{
-        marginTop:5, 
+        margin:8,
+        marginTop:5,
+        marginBottom: 5,
         padding: 5, 
         backgroundColor:'#A2E62E',
         borderRadius: 5,
@@ -302,25 +305,32 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     NonVaccinatedContainer:{
-        marginTop:5, 
-        padding: 5, 
+        margin:8,
+        marginTop:5,
+        marginBottom: 5,
+        padding: 5,
         backgroundColor:'#F44336',
-        //borderColor:"#F44336",
-        //borderWidth:1,
         borderRadius: 5,
         flexDirection:"row",
         alignItems:"center",
         justifyContent:'center'
     },
     descriptionContainer:{
+        margin: 8,
         marginTop:5, 
+        marginBottom: 2,
         padding: 5, 
+        paddingLeft: 8,
         backgroundColor:'white',
         borderRadius: 5
     },
     personData:{
-        marginTop:5, 
-        padding: 5, 
+        margin: 8,
+        marginTop:0,
+        marginBottom: 0, 
+        paddingLeft: 8,
+        paddingTop: 10,
+        paddingBottom: 10, 
         backgroundColor:'#CBE2FF',
         borderRadius: 5
     },
